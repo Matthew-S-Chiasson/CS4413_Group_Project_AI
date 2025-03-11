@@ -14,7 +14,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load CSV file
-df = pd.read_csv("cub20_dataframe.csv")
+#df = pd.read_csv("cub20_dataframe.csv")
+df = pd.read_csv("CS4413_Group_Project_AI/cub20_dataframe.csv")
 
 # Normalize class_id values
 df['class_id'] -= df['class_id'].min()
@@ -56,7 +57,8 @@ train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 # Define model
-model = models.resnet50(pretrained=False)
+model = models.resnet18(pretrained=False)
+
 num_classes = df['class_id'].nunique()
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 
@@ -93,7 +95,7 @@ for epoch in range(epochs):
     print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss/len(train_loader):.4f}, Accuracy: {100 * correct / total:.2f}%, Time: {epoch_time:.2f} sec")
 
 # Save model
-torch.save(model.state_dict(), "resnet50_cub20.pth")
+torch.save(model.state_dict(), "resnet18_cub20.pth")
 print("Training complete. Model saved.")
 
 # ------------------------------
