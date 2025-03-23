@@ -14,8 +14,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load CSV file
-#df = pd.read_csv("cub20_dataframe.csv")
-df = pd.read_csv("CS4413_Group_Project_AI/cub20_dataframe.csv")
+df = pd.read_csv("cub20_dataframe.csv")
+#df = pd.read_csv("CS4413_Group_Project_AI/cub20_dataframe.csv")
 
 # Normalize class_id values
 df['class_id'] -= df['class_id'].min()
@@ -39,8 +39,18 @@ class CUB20Dataset(Dataset):
     def __getitem__(self, idx):
         img_path = self.dataframe.iloc[idx]['image_path']
         label = self.dataframe.iloc[idx]['class_id']
+        
+        # Load image
         image = Image.open(img_path).convert('RGB')
         
+        # Get bounding box coordinates
+        x, y, width, height = self.dataframe.iloc[idx][['x', 'y', 'width', 'height']]
+        x, y, width, height = int(x), int(y), int(width), int(height)
+        
+        # Crop using bounding box
+        image = image.crop((x, y, x + width, y + height))
+        
+        # Apply transformations
         if self.transform:
             image = self.transform(image)
         
@@ -66,11 +76,16 @@ model.fc = nn.Linear(model.fc.in_features, num_classes)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.AdamW(model.parameters(), lr=0.001)
 
 # Training loop
-epochs = 25
-print(f"Starting training with {epochs} epochs")
+epochs = 29
+patience = 5
+best_loss = float('inf')
+trigger_times = 0
+
+model_name = "resnet18_NPT_cub20.pth"
+print(f"Starting training non pre-traind Resnet18 with {epochs} epochs")
 for epoch in range(epochs):
     model.train()
     running_loss = 0.0
@@ -90,12 +105,22 @@ for epoch in range(epochs):
         _, predicted = torch.max(outputs, 1)
         correct += (predicted == labels).sum().item()
         total += labels.size(0)
-    
+
+    epoch_loss = running_loss / len(train_loader)
     epoch_time = time.time() - start_time
     print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss/len(train_loader):.4f}, Accuracy: {100 * correct / total:.2f}%, Time: {epoch_time:.2f} sec")
+    
+     # Check for early stopping
+    if epoch_loss < best_loss:
+        best_loss = epoch_loss
+        trigger_times = 0
+        torch.save(model.state_dict(), model_name)  # Save the best model immediately
+    else:
+        trigger_times += 1
+        if trigger_times >= patience:
+            print("Early stopping!")
+            break
 
-# Save model
-torch.save(model.state_dict(), "resnet18_cub20.pth")
 print("Training complete. Model saved.")
 
 # ------------------------------
@@ -121,7 +146,7 @@ avg_test_loss = test_loss / len(test_loader)
 test_accuracy = 100 * correct / total
 print(f"\nTest Loss: {avg_test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
 
-# Optional: Confusion Matrix & Classification Report
+# Confusion Matrix & Classification Report
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
 y_true, y_pred = [], []

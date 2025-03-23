@@ -7,7 +7,8 @@ import pandas as pd
 import os
 
 # Define paths
-dataset_dir = "D:/Coding Projects/Bird Classification AI/CUB-Datasets/CUB_20"
+#dataset_dir = "D:/Coding Projects/Bird Classification AI/CUB-Datasets/CUB_20"
+dataset_dir = "D:/Coding Projects/Bird Classification AI/Local Repo/CS4413_Group_Project_AI/CUB_20"
 images_dir = os.path.join(dataset_dir, "images")
 
 # Load files
@@ -26,8 +27,41 @@ df = df.merge(split_df, on="image_id")
 # Add full image path
 df["image_path"] = df["image_name"].apply(lambda x: os.path.join(images_dir, x))
 
+def remove_class_by_ID(df, class_id):
+    # Remove all rows with the specified class_id
+    df = df[df["class_id"] != class_id]
+    print(f"Class {class_id} removed and DataFrame updated.")
+    return df  # Return the modified DataFrame
+
+# While Trainging on CUB 20 thease 3 classes had the poorest accuracy scores. so im removing them :)
+df = remove_class_by_ID(df, 2)
+df = remove_class_by_ID(df, 3)
+df = remove_class_by_ID(df, 9)
+
+
+# Get unique sorted class IDs
+unique_classes = sorted(df["class_id"].unique())
+
+# Create a mapping from old class_id to new zero-based class_id
+class_mapping = {old_id: new_id for new_id, old_id in enumerate(unique_classes)}
+
+# Apply mapping
+df["class_id"] = df["class_id"].map(class_mapping)
+
+print("New class mapping:", class_mapping)  # Debugging
+
 # Save DataFrame
-df.to_csv(os.path.join(dataset_dir, "cub20_dataframe.csv"), index=False)
+print("Saving to:", os.path.join(dataset_dir, "cub17_dataframe.csv"))
+try:
+    df.to_csv(os.path.join(dataset_dir, "cub17_dataframe.csv"), index=False)
+    print("File saved successfully.")
+except Exception as e:
+    print("Error saving file:", e)
+
+
+if not os.path.exists(dataset_dir):
+    print(f"Error: Directory {dataset_dir} does not exist.")
+
 
 print(df.columns)
 print(df.head)
