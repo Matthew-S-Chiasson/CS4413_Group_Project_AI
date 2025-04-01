@@ -35,3 +35,8 @@ We drop all but the first 17 classes from the dataset to imporve training time f
     Achives accuracy of ~91% on CUB17 dataset
 
 Each victum model is trained and saved in the format: resnet18_ *dataset used* _ *trainer* _ *Fedarated Learning?* _ *used DP?* _ *Used HE?* _ *accuracy achived* .pth, to be later used in attack simulation.
+
+
+# Fedarated Learning
+
+each model is then trained again using FL to add new data to the model. this model is denoted as _Model_
