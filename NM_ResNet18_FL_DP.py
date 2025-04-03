@@ -20,7 +20,8 @@ from Legacy.ModifiedTrainer import ModifiedResNet18
 # ----------------------------
 parser = argparse.ArgumentParser(description="Federated Learning to update a model.")
 parser.add_argument("--csv_path", type=str, required=True, help="Path to dataframe_CUB_20.csv, or dataframe_CUB_17.csv")
-parser.add_argument("--UseDP", type=bool, default=False, help="weather or not to train with DP")
+parser.add_argument("--UseDP", type=str, default="false", help="Whether or not to train with DP")
+parser.add_argument("--poison_active", type=str, default="false", help="Whether to activate poisoning")
 parser.add_argument("--num_rounds", type=int, default=5, help="Number of federated learning rounds")
 parser.add_argument("--num_clients", type=int, default=5, help="Number of simulated clients")
 parser.add_argument("--batch_size", type=int, default=32, help="Batch size for clients")
@@ -83,7 +84,7 @@ def apply_differential_privacy(model, noise_multiplier=1.0, max_grad_norm=1.0):
 # 6️⃣ Define Flower Federated Client
 # ----------------------------
 class FlowerClient(fl.client.NumPyClient):
-    def __init__(self, model, train_loader, device, dp_enable=False):
+    def __init__(self, model, train_loader, device, dp_enable="false"):
         self.model = model.to(device)
         self.train_loader = train_loader
         self.device = device
@@ -131,7 +132,8 @@ class FlowerClient(fl.client.NumPyClient):
 
                 self.optimizer.step()
 
-        if self.dp_enable:
+        print("args sees: ", args.UseDP, " Actual: ", self.dp_enable)
+        if self.dp_enable == "true":
             apply_differential_privacy(self.model)  # This now correctly applies DP without device mismatches.
 
 
@@ -269,6 +271,21 @@ def load_and_evaluate_model(model_path):
             total += labels.size(0)
 
     accuracy = correct / total
+
+    # Confusion Matrix & Classification Report
+    from sklearn.metrics import classification_report
+    y_true, y_pred = [], []
+    with torch.no_grad():
+        for images, labels in test_loader:
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+            _, predicted = torch.max(outputs, 1)
+            y_true.extend(labels.cpu().numpy())
+            y_pred.extend(predicted.cpu().numpy())
+    
+    print(f"🎯 Final Model Accuracy: {accuracy * 100:.2f}%")
+    print("\nClassification Report:\n", classification_report(y_true, y_pred, zero_division=1))
+    
     
     return accuracy
 
@@ -296,6 +313,8 @@ test_transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
+
+
 # Create Train/Test Datasets
 train_df = df[df['is_training'] == 1].reset_index(drop=True)
 test_df = df[df['is_training'] == 0].reset_index(drop=True)
@@ -307,6 +326,11 @@ test_dataset = CUB20Dataset(test_df, transform=test_transform)
 # 4️⃣ Split Dataset for Clients
 # ----------------------------
 client_datasets = random_split(train_dataset, [len(train_dataset) // args.num_clients] * args.num_clients)
+print("args see poison as: ", args.poison_active)
+if(args.poison_active == "true"):
+    client_datasets[1]=[(data, 10 if label == 7 else label) for data, label in client_datasets[1]]
+    client_labels = [[client_datasets[1][j][1] for j in range(len(client_datasets[1]))]]
+    print("Labels: ", client_labels)
 client_loaders = [DataLoader(ds, batch_size=args.batch_size, shuffle=True) for ds in client_datasets]
 
 # ----------------------------
