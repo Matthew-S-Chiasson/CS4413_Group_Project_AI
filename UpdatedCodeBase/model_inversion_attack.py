@@ -1,9 +1,13 @@
+import random
+import pandas as pd
 import torch
 import torch.nn.functional as F
-from torchvision import models
+from torch.utils.data import Dataset
+from torchvision import models, transforms
 from PIL import Image
 import numpy as np
 
+#Load state dictionary
 def load_state_dict_custom(model, state_dict):
     new_state_dict = {}
     for k, v in state_dict.items():
@@ -31,7 +35,6 @@ def load_model(model_name, num_classes=17, device='cuda'):
     model = models.resnet18(pretrained=False)
     model.fc = torch.nn.Linear(model.fc.in_features, num_classes)  # Adjust the output layer
 
-    # Load the state dictionary
     state_dict = torch.load(model_path, map_location=device)
     
     # Call the custom method to load the state dictionary with the correct prefix
@@ -43,7 +46,7 @@ def load_model(model_name, num_classes=17, device='cuda'):
     return model
 
 def generate_inversion_image(model, target_class, num_iterations, lr, device='cuda', 
-                            image_size=224, decay_lr=True, use_tv_loss=True, use_l2_loss=True):
+                            image_size=224, decay_lr = True, use_tv_loss = True, use_l2_loss = True):
     """
     Generate an inverted image that activates a target class in the model.
     
@@ -160,13 +163,65 @@ if __name__ == "__main__":
     print("Please select which model to load")
     print("model1 contains an FL model without DP")
     print("model2 contains an FL model with DP")
-    selected_model = input("Which model wiuld you like to run? model1 or model2: ")  # Change to "model2" or another key from `model_paths` to switch models
+    selected_model = input("Which model would you like to run? model1 or model2: ")
 
     model = load_model(selected_model, num_classes=17, device=device)
-    
-    target_class = 0  # Class to invert
-    
-    # Call the improved function with additional parameters
+
+    target_class =  int(input("Which target class are you looking to invert:"))  # Class to invert
+
+    class CUB20Dataset(Dataset):
+        def __init__(self, dataframe, transform=None):
+            self.dataframe = dataframe
+            self.transform = transform
+
+        def __len__(self):
+            return len(self.dataframe)
+
+        def __getitem__(self, idx):
+            img_path = self.dataframe.iloc[idx]['image_path']
+            label = self.dataframe.iloc[idx]['class_id']
+
+            # Load image
+            image = Image.open(img_path).convert('RGB')
+
+            # Apply transformations
+            if self.transform:
+                image = self.transform(image)
+
+            return image, label
+
+
+    df = pd.read_csv('cub17_dataframe.csv')
+    transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+    dataset = CUB20Dataset(dataframe=df, transform=transform)
+
+    def random_image_from_class(dataset, target_class):
+        # Filter the dataset for the target class
+        target_class_data = [data for data in dataset if data[1] == target_class]
+        
+        if len(target_class_data) == 0:
+            print(f"No images found for class {target_class}")
+            return None, None
+        
+        # Get a random index from the filtered target class data
+        random_idx = random.randint(0, len(target_class_data) - 1)
+        
+        # Retrieve the image and label from the target class data
+        image, label = target_class_data[random_idx]
+        
+        # Convert the image back to PIL format for displaying
+        to_pil_image = transforms.ToPILImage()
+        image_pil = to_pil_image(image)
+        
+        # Show the image
+        image_pil.show()
+        
+        return image_pil, label
+
+    # Call random_image to display one random image
+    random_image_from_class(dataset, target_class)
+
+    # Call the generate_inversion_image
     generated_image, loss_history = generate_inversion_image(
         model, 
         target_class, 
