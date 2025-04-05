@@ -1,0 +1,380 @@
+[
+    {
+        "0": {
+            "precision": 1.0,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9655172413793104,
+            "support": 30.0
+        },
+        "1": {
+            "precision": 0.96,
+            "recall": 0.8,
+            "f1-score": 0.8727272727272727,
+            "support": 30.0
+        },
+        "2": {
+            "precision": 1.0,
+            "recall": 0.8571428571428571,
+            "f1-score": 0.9230769230769231,
+            "support": 14.0
+        },
+        "3": {
+            "precision": 1.0,
+            "recall": 0.9090909090909091,
+            "f1-score": 0.9523809523809523,
+            "support": 11.0
+        },
+        "4": {
+            "precision": 0.92,
+            "recall": 1.0,
+            "f1-score": 0.9583333333333334,
+            "support": 23.0
+        },
+        "5": {
+            "precision": 0.8888888888888888,
+            "recall": 0.8888888888888888,
+            "f1-score": 0.8888888888888888,
+            "support": 18.0
+        },
+        "6": {
+            "precision": 0.9333333333333333,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9333333333333333,
+            "support": 30.0
+        },
+        "7": {
+            "precision": 0.8181818181818182,
+            "recall": 0.9,
+            "f1-score": 0.8571428571428571,
+            "support": 30.0
+        },
+        "8": {
+            "precision": 0.896551724137931,
+            "recall": 1.0,
+            "f1-score": 0.9454545454545454,
+            "support": 26.0
+        },
+        "9": {
+            "precision": 0.9032258064516129,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9180327868852459,
+            "support": 30.0
+        },
+        "10": {
+            "precision": 0.9666666666666667,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9666666666666667,
+            "support": 30.0
+        },
+        "11": {
+            "precision": 0.9642857142857143,
+            "recall": 0.9642857142857143,
+            "f1-score": 0.9642857142857143,
+            "support": 28.0
+        },
+        "12": {
+            "precision": 1.0,
+            "recall": 0.8928571428571429,
+            "f1-score": 0.9433962264150944,
+            "support": 28.0
+        },
+        "13": {
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1-score": 0.9811320754716981,
+            "support": 27.0
+        },
+        "14": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 15.0
+        },
+        "15": {
+            "precision": 0.9655172413793104,
+            "recall": 0.9655172413793104,
+            "f1-score": 0.9655172413793104,
+            "support": 29.0
+        },
+        "16": {
+            "precision": 0.8529411764705882,
+            "recall": 1.0,
+            "f1-score": 0.9206349206349206,
+            "support": 29.0
+        },
+        "accuracy": 0.9369158878504673,
+        "macro avg": {
+            "precision": 0.9452701393997567,
+            "recall": 0.9357301401926148,
+            "f1-score": 0.9386188811444746,
+            "support": 428.0
+        },
+        "weighted avg": {
+            "precision": 0.9407660459912061,
+            "recall": 0.9369158878504673,
+            "f1-score": 0.9369846496905702,
+            "support": 428.0
+        },
+        "Model Name": "NM_ResNet18_Victum_NDP_NP_1",
+        "Use DP": "false",
+        "noise multiplier ": "NAN",
+        "max grand norm": "NAN",
+        "poison active": "false",
+        "num rounds": 10,
+        "num clients": 5,
+        "num poisoned clients": 0,
+        "poisoned label": "NAN"
+    },
+    {
+        "0": {
+            "precision": 0.90625,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9354838709677419,
+            "support": 30.0
+        },
+        "1": {
+            "precision": 0.8484848484848485,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.8888888888888888,
+            "support": 30.0
+        },
+        "2": {
+            "precision": 0.6842105263157895,
+            "recall": 0.9285714285714286,
+            "f1-score": 0.7878787878787878,
+            "support": 14.0
+        },
+        "3": {
+            "precision": 0.7857142857142857,
+            "recall": 1.0,
+            "f1-score": 0.88,
+            "support": 11.0
+        },
+        "4": {
+            "precision": 0.875,
+            "recall": 0.9130434782608695,
+            "f1-score": 0.8936170212765957,
+            "support": 23.0
+        },
+        "5": {
+            "precision": 0.9090909090909091,
+            "recall": 0.5555555555555556,
+            "f1-score": 0.6896551724137931,
+            "support": 18.0
+        },
+        "6": {
+            "precision": 0.90625,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9354838709677419,
+            "support": 30.0
+        },
+        "7": {
+            "precision": 0.9166666666666666,
+            "recall": 0.7333333333333333,
+            "f1-score": 0.8148148148148148,
+            "support": 30.0
+        },
+        "8": {
+            "precision": 0.8888888888888888,
+            "recall": 0.9230769230769231,
+            "f1-score": 0.9056603773584906,
+            "support": 26.0
+        },
+        "9": {
+            "precision": 0.9642857142857143,
+            "recall": 0.9,
+            "f1-score": 0.9310344827586207,
+            "support": 30.0
+        },
+        "10": {
+            "precision": 0.967741935483871,
+            "recall": 1.0,
+            "f1-score": 0.9836065573770492,
+            "support": 30.0
+        },
+        "11": {
+            "precision": 0.9285714285714286,
+            "recall": 0.9285714285714286,
+            "f1-score": 0.9285714285714286,
+            "support": 28.0
+        },
+        "12": {
+            "precision": 1.0,
+            "recall": 0.8928571428571429,
+            "f1-score": 0.9433962264150944,
+            "support": 28.0
+        },
+        "13": {
+            "precision": 0.9615384615384616,
+            "recall": 0.9259259259259259,
+            "f1-score": 0.9433962264150944,
+            "support": 27.0
+        },
+        "14": {
+            "precision": 0.9333333333333333,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9333333333333333,
+            "support": 15.0
+        },
+        "15": {
+            "precision": 0.9655172413793104,
+            "recall": 0.9655172413793104,
+            "f1-score": 0.9655172413793104,
+            "support": 29.0
+        },
+        "16": {
+            "precision": 0.9666666666666667,
+            "recall": 1.0,
+            "f1-score": 0.9830508474576272,
+            "support": 29.0
+        },
+        "accuracy": 0.9135514018691588,
+        "macro avg": {
+            "precision": 0.9063653474364809,
+            "recall": 0.9097913210312892,
+            "f1-score": 0.9025523028396712,
+            "support": 428.0
+        },
+        "weighted avg": {
+            "precision": 0.9184738288049779,
+            "recall": 0.9135514018691588,
+            "f1-score": 0.9119137827962169,
+            "support": 428.0
+        },
+        "Model Name": "NM_ResNet18_Victum_NDP_NP_2",
+        "Use DP": "false",
+        "noise multiplier ": "NAN",
+        "max grand norm": "NAN",
+        "poison active": "false",
+        "num rounds": 10,
+        "num clients": 5,
+        "num poisoned clients": 0,
+        "poisoned label": "NAN"
+    },
+    {
+        "0": {
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1-score": 0.8888888888888888,
+            "support": 30.0
+        },
+        "1": {
+            "precision": 0.7777777777777778,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.8484848484848485,
+            "support": 30.0
+        },
+        "2": {
+            "precision": 0.8571428571428571,
+            "recall": 0.8571428571428571,
+            "f1-score": 0.8571428571428571,
+            "support": 14.0
+        },
+        "3": {
+            "precision": 0.7692307692307693,
+            "recall": 0.9090909090909091,
+            "f1-score": 0.8333333333333334,
+            "support": 11.0
+        },
+        "4": {
+            "precision": 1.0,
+            "recall": 0.9565217391304348,
+            "f1-score": 0.9777777777777777,
+            "support": 23.0
+        },
+        "5": {
+            "precision": 0.6153846153846154,
+            "recall": 0.8888888888888888,
+            "f1-score": 0.7272727272727273,
+            "support": 18.0
+        },
+        "6": {
+            "precision": 1.0,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9830508474576272,
+            "support": 30.0
+        },
+        "7": {
+            "precision": 0.8333333333333334,
+            "recall": 0.6666666666666666,
+            "f1-score": 0.7407407407407407,
+            "support": 30.0
+        },
+        "8": {
+            "precision": 0.9259259259259259,
+            "recall": 0.9615384615384616,
+            "f1-score": 0.9433962264150944,
+            "support": 26.0
+        },
+        "9": {
+            "precision": 1.0,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9655172413793104,
+            "support": 30.0
+        },
+        "10": {
+            "precision": 0.9666666666666667,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9666666666666667,
+            "support": 30.0
+        },
+        "11": {
+            "precision": 1.0,
+            "recall": 0.8928571428571429,
+            "f1-score": 0.9433962264150944,
+            "support": 28.0
+        },
+        "12": {
+            "precision": 1.0,
+            "recall": 0.8928571428571429,
+            "f1-score": 0.9433962264150944,
+            "support": 28.0
+        },
+        "13": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 27.0
+        },
+        "14": {
+            "precision": 1.0,
+            "recall": 0.9333333333333333,
+            "f1-score": 0.9655172413793104,
+            "support": 15.0
+        },
+        "15": {
+            "precision": 0.9310344827586207,
+            "recall": 0.9310344827586207,
+            "f1-score": 0.9310344827586207,
+            "support": 29.0
+        },
+        "16": {
+            "precision": 0.8285714285714286,
+            "recall": 1.0,
+            "f1-score": 0.90625,
+            "support": 29.0
+        },
+        "accuracy": 0.9112149532710281,
+        "macro avg": {
+            "precision": 0.9120628151054115,
+            "recall": 0.9111724484861446,
+            "f1-score": 0.9071686077957641,
+            "support": 428.0
+        },
+        "weighted avg": {
+            "precision": 0.9228374775103746,
+            "recall": 0.9112149532710281,
+            "f1-score": 0.9127790673872301,
+            "support": 428.0
+        },
+        "Model Name": "NM_ResNet18_Victum_NDP_NP_3",
+        "Use DP": "false",
+        "noise multiplier ": "NAN",
+        "max grand norm": "NAN",
+        "poison active": "false",
+        "num rounds": 10,
+        "num clients": 5,
+        "num poisoned clients": 0,
+        "poisoned label": "NAN"
+    }
+]
