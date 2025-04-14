@@ -1,4 +1,4 @@
-# Mosly genarated by chat GPT. It updates Resnet18's params on the CUB-17 Dataset, by simulating FL.
+# updates Resnet18's params on the CUB-17 Dataset, by simulating FL.
 
 import flwr as fl
 from flwr.common import Context, parameters_to_ndarrays, ndarrays_to_parameters
@@ -316,4 +316,4 @@ final_accuracy = load_and_evaluate_model(args.save_path)
 print(f"🎯 Final Model Accuracy: {final_accuracy * 100:.2f}%")
 
 
-# Example Usage: python NM_Resnet18_FL.py --csv_path "cub17_dataframe.csv" --num_rounds 10 --num_clients 3 --batch_size 32 --save_path "NM_ResNet18_Victum.pth"
+# Example Usage: python Train_Resnet18_FL.py --csv_path "cub17_dataframe.csv" --num_rounds 10 --num_clients 3 --batch_size 32 --save_path "NM_ResNet18_Victum.pth"
